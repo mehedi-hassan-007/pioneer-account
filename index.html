@@ -31,13 +31,13 @@
       <div class="col-4 ">
         <div class="transaction-box withdraw">
           <h5>withdraw</h5>
-          <h2>$00</h2>
+          <h2>$<span id="totalWidthdraw">00</span></h2>
         </div>
       </div class="col-4">
       <div class="col-4 ">
         <div class="transaction-box balance">
           <h5>balance</h5>
-          <h2>$44</h2>
+          <h2>$<span id="totalBalance">007</span></h2>
         </div>
        </div class="col-4">
     </div>
@@ -53,9 +53,9 @@
           <div class="col-md-6">
             <div class="transaction-submit submit-area">
             <h4>withdraw</h4>
-            <input type="text" class="form-control" placeholder ="$ amount you want to withdraw">
+            <input id="widthdrawAmount" type="text" class="form-control" placeholder ="$ amount you want to withdraw">
             <br>
-            <button class="btn btn-success">withdraw</button>
+            <button id="widthdrawBtn" class="btn btn-success">withdraw</button>
             </div>
         </div>
       </div>
@@ -71,17 +71,69 @@
     });
 
     //deposit button event handler
+
       const depositBtn = document.getElementById("deposit-btn")
       depositBtn.addEventListener("click", function () {
-      const depositAmount = document.getElementById("deposit-amount").value;
-      const depositNumber = parseFloat(depositAmount)
+         const depositNumber = getInputNumber("deposit-amount");
+        
+
+      // const depositBtn = document.getElementById("deposit-btn")
+      // depositBtn.addEventListener("click", function () {
+      // const depositAmount = document.getElementById("deposit-amount").value;
+      // const depositNumber = parseFloat(depositAmount);
 
 
-      const currentDeposit = document.getElementById("currentDeposit").innerText;
-      const currentDepositNumber = parseFloat(currentDeposit)
-      const totalDeposit = depositNumber + currentDepositNumber;
-      document.getElementById("currentDeposit").innerText = totalDeposit;
+      // const currentDeposit = document.getElementById("currentDeposit").innerText;
+      // const currentDepositNumber = parseFloat(currentDeposit);
+      // const totalDeposit = depositNumber + currentDepositNumber;
+      // document.getElementById("currentDeposit").innerText = totalDeposit; 
+
+      //adding to total depositAmount
+      depositAddition ("currentDeposit",depositNumber)
+      depositAddition ("totalBalance", depositNumber)
+
+      document.getElementById("deposit-amount").value="";
+
       });
+
+      function getInputNumber(id) {
+        const number=document.getElementById(id).value;
+        const totalNumber = parseFloat(number);
+        return totalNumber;
+      }
+
+      function depositAddition (id, depositNumber) {
+      const currentDeposit= document.getElementById(id).innerText;
+      const currentAmount = parseFloat(currentDeposit);
+      const totalAmount = currentAmount + depositNumber;
+      document.getElementById(id).innerText = totalAmount;}
+
+      //addition of widthdraw amount 
+      const widthdrawBtn = document.getElementById("widthdrawBtn");
+      widthdrawBtn.addEventListener("click", function () {
+        const currentWidthdraw = getInputNumber("widthdrawAmount")
+        // const widthdrawAmount = document.getElementById("widthdrawAmount").value;
+        // const widthdrawAmountNumber = parseFloat(widthdrawAmount);
+        depositAddition("totalWidthdraw", currentWidthdraw)
+        depositAddition("totalBalance", -1*currentWidthdraw)
+        // const totalWidthdraw = document.getElementById("totalWidthdraw").innerText;
+        // const totalWidthdrawNumber = parseFloat(totalWidthdraw);
+
+        // const totalWidthdrawBalance = totalWidthdrawNumber + widthdrawAmountNumber ;
+        // document.getElementById("totalWidthdraw").innerText = totalWidthdrawBalance ;
+        
+        
+        document.getElementById("widthdrawAmount").value ="";
+
+
+        //subtraction widthdraw to total balance
+        // const totalBalance = document.getElementById("totalBalance").innerText;
+        // const totalBalanceAmount = parseFloat(totalBalance);
+        // const numberBySubtraction = totalBalanceAmount - currentWidthdraw ;
+        // document.getElementById("totalBalance").innerText = numberBySubtraction;
+      })   
+
+      //in the javascript section which of these code are commented out are functionalized after writtening it.thanks
   </script>
 </body>
 </html>
